@@ -4,9 +4,48 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sudoku</title>
+    <link rel="stylesheet" href="./src/style.css" />
   </head>
   <body>
-    <main id="app">
+    <main class="app">
+      <header class="app__header">
+        <h1>Sudoku</h1>
+        <p>Train your logic and solve the puzzle.</p>
+      </header>
+      <section class="game">
+        <div class="board" aria-label="Sudoku board">
+          <!-- cells will be here -->
+           <div class="board" aria-label="Sudoku board">
+            <button class="cell">5</button>
+            <button class="cell"></button>
+            <button class="cell">3</button>
+          </div>
+        </div>
+        <aside class="panel">
+          <div class="info">
+            <p>Time: <span>00:00</span></p>
+            <p>Mistakes: <span>0</span></p>
+          </div>
+
+          <div class="numbers">
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>4</button>
+            <button>5</button>
+            <button>6</button>
+            <button>7</button>
+            <button>8</button>
+            <button>9</button>
+          </div>
+
+          <div class="actions">
+            <button>New game</button>
+            <button>Check</button>
+            <button>Hint</button>
+          </div>
+        </aside>
+      </section>
       <script type="module" src="./src/main.ts"></script>
     </main>
   </body>
