@@ -1,0 +1,24 @@
+export type CellValue = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | null;
+
+export type Board = CellValue[][];
+
+export type Position = {
+  row: number;
+  col: number;
+};
+
+export type Difficulty = 'easy' | 'medium' | 'hard';
+
+export type Move = {
+  row: number;
+  col: number;
+  previousValue: CellValue;
+  nextValue: CellValue;
+};
+
+//Зачем нужен:
+// Чтобы во всех файлах использовать одинаковые типы.
+// Чтобы TypeScript ловил ошибки.
+// Чтобы не было путаницы: где число, где пустая клетка, где позиция.
+// Например, пустая клетка — это null, а не 0, не '', не undefined.
+// Я бы советовала использовать именно null, потому что это явно значит: “клетка пустая”.
