@@ -2,19 +2,7 @@ export type CellValue = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | null;
 
 export type Board = CellValue[][];
 
-export type Position = {
-  row: number;
-  col: number;
-};
-
-export type Difficulty = 'easy' | 'medium' | 'hard';
-
-export type Move = {
-  row: number;
-  col: number;
-  previousValue: CellValue;
-  nextValue: CellValue;
-};
+export type CellIndex = number;
 
 //Зачем нужен:
 // Чтобы во всех файлах использовать одинаковые типы.
