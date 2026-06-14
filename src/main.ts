@@ -1,31 +1,3 @@
-// main.ts
-//   ↓
-// createGameState()
-//   ↓
-// generator.ts создаёт puzzle + solution
-//   ↓
-// renderBoard.ts показывает поле
-//   ↓
-// пользователь кликает клетку
-//   ↓
-// gameState.ts обновляет selectedCell
-//   ↓
-// пользователь вводит число
-//   ↓
-// validator.ts проверяет ход
-//   ↓
-// gameState.ts обновляет currentBoard
-//   ↓
-// renderBoard.ts перерисовывает поле
-//   ↓
-// storage.ts сохраняет игру
-
-// core → чистая логика
-// state → состояние партии
-// ui → отображение
-// main → запуск
-
-//BOARD
 const boardElement = document.querySelector<HTMLDivElement>(".board");
 
 if (!boardElement) {
@@ -46,10 +18,13 @@ const puzzle: number[] = [
     0, 0, 0, 0, 8, 0, 0, 7, 9
 ];
 
+let selectedCellElement: number | null = null;
+
 function renderBoard(board: number[]) {
     if (!boardElement) {
         return;
     }
+    
     boardElement.innerHTML = "";
     for (let i = 0; i < board.length; i++) {
         const cellValue = board[i];
@@ -57,16 +32,35 @@ function renderBoard(board: number[]) {
 
         cellElement.classList.add("cell");
         cellElement.type = "button";
+        cellElement.dataset.index = String(i);
         
         if (cellValue !== 0) {
-            cellElement.textContent = cellValue.toString();
+            cellElement.textContent = String(cellValue);
             cellElement.classList.add("given");
-        } else {
-            cellElement.setAttribute("contenteditable", "true");
         }
+
+        cellElement.addEventListener("click", () => {
+            selectCell(i);
+        });
 
         boardElement.appendChild(cellElement);
     }
 };
+
+function selectCell(index: number) {
+  selectedCellElement = index;
+
+  const cells = document.querySelectorAll<HTMLButtonElement>(".cell");
+
+  cells.forEach((cell) => {
+    cell.classList.remove("cell--selected");
+  });
+
+  const selectedCell = cells[index];
+
+  if (selectedCell) {
+    selectedCell.classList.add("cell--selected");
+  }
+}
 
 renderBoard(puzzle);

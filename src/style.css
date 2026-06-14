@@ -88,3 +88,15 @@ button:hover {
 .cell:nth-child(n + 46):nth-child(-n + 54) {
   border-bottom: 2px solid #ccc;
 }
+
+.given {
+  font-weight: 700;
+  background: #f1f1f1;
+  cursor: default;
+}
+
+.cell--selected {
+  background: #dbeafe;
+  outline: 3px solid #7aa7ff;
+  outline-offset: -3px;
+}
