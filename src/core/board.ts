@@ -21,3 +21,7 @@ export function createBoardCopy(board: Board): Board {
   return [...board];
 
 }
+
+export function createEmptyBoard(): Board {
+  return Array(81).fill(0) as Board;
+}
