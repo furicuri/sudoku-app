@@ -28,8 +28,12 @@ if (!themeButton) {
   throw new Error("Theme button not found");
 }
 
+const board = boardElement;
+const newGame = newGameButton;
+const theme = themeButton;
+
 function updateBoard(): void {
-  renderBoard(boardElement, getCurrentBoard(), {
+  renderBoard(board, getCurrentBoard(), {
     selectedCellIndex: getSelectedCellIndex(),
     onCellClick: handleCellClick,
   });
@@ -52,11 +56,11 @@ function handleNewGameClick(): void {
 }
 
 function handleThemeButtonClick(): void {
-  toggleTheme(themeButton);
+  toggleTheme(theme);
 }
 
-newGameButton.addEventListener("click", handleNewGameClick);
-themeButton.addEventListener("click", handleThemeButtonClick);
+newGame.addEventListener("click", handleNewGameClick);
+theme.addEventListener("click", handleThemeButtonClick);
 
-applySavedTheme(themeButton);
+applySavedTheme(theme);
 handleNewGameClick();
