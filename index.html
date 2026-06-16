@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sudoku</title>
+    <script>
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme === "dark") {
+          document.documentElement.classList.add("theme-dark");
+        }
+    </script>
     <link rel="stylesheet" href="./src/style.css" />
   </head>
   <body>
@@ -38,6 +44,7 @@
             <button class="new-game-button">New game</button>
             <button>Check</button>
             <button>Hint</button>
+            <button type="button" data-action="toggle-theme">Dark theme</button>
           </div>
         </aside>
       </section>

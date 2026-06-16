@@ -2,6 +2,11 @@
   box-sizing: border-box;
 }
 
+.theme-dark body {
+  background: #111827;
+  color: #f9fafb;
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -33,8 +38,12 @@ body {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   grid-template-rows: repeat(9, 1fr);
-  border: 3px solid #222;
+  border: 3px solid currentColor;
   background: white;
+}
+
+.theme-dark .board {
+  background: #1f2937;
 }
 
 .panel {
@@ -64,8 +73,18 @@ button {
   font-size: 16px;
 }
 
+.theme-dark button {
+  border-color: #4b5563;
+  background: #1f2937;
+  color: #f9fafb;
+}
+
 button:hover:not(.cell--selected) {
   background: #eeeeee;
+}
+
+.theme-dark button:hover:not(.cell--selected) {
+  background: #374151;
 }
 
 .cell {
@@ -80,6 +99,11 @@ button:hover:not(.cell--selected) {
   border: 1px solid #ccc;
   font-size: 24px;
   background: white;
+}
+
+.theme-dark .cell {
+  border-color: #4b5563;
+  background: #1f2937;
 }
 
 .cell:nth-child(3n) {
@@ -105,8 +129,17 @@ button:hover:not(.cell--selected) {
   cursor: default;
 }
 
+.theme-dark .given {
+  background: #374151;
+}
+
 .cell--selected {
   background: #dbeafe;
   outline: 3px solid #7aa7ff;
   outline-offset: -3px;
+}
+
+.theme-dark .cell--selected {
+  background: #1e40af;
+  outline-color: #93c5fd;
 }
