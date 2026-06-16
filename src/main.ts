@@ -6,6 +6,7 @@ import {
   selectCell,
   startNewGame,
 } from "./state/gameState";
+import { loadPuzzle, savePuzzle } from "./state/storage";
 
 import { renderBoard } from "./ui/renderBoard";
 import { applySavedTheme, toggleTheme } from "./ui/theme";
@@ -51,6 +52,7 @@ function handleCellClick(index: number): void {
 function handleNewGameClick(): void {
   const puzzle = generatePuzzle();
 
+  savePuzzle(puzzle);
   startNewGame(puzzle);
   updateBoard();
 }
@@ -59,8 +61,20 @@ function handleThemeButtonClick(): void {
   toggleTheme(theme);
 }
 
+function initGame(): void {
+  const savedPuzzle = loadPuzzle();
+
+  if (savedPuzzle) {
+    startNewGame(savedPuzzle);
+    updateBoard();
+    return;
+  }
+
+  handleNewGameClick();
+}
+
 newGame.addEventListener("click", handleNewGameClick);
 theme.addEventListener("click", handleThemeButtonClick);
 
 applySavedTheme(theme);
-handleNewGameClick();
+initGame();
