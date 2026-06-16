@@ -1,9 +1,9 @@
 import type { Board, CellIndex } from "../core/types"; 
-import { isGivenCell } from "../state/gameState";
 
 type RenderBoardOptions = { 
   selectedCellIndex: CellIndex | null;
   onCellClick: (index: CellIndex) => void;
+  isGivenCell: (index: CellIndex) => boolean;
 };
 
 export function renderBoard( 
@@ -26,7 +26,7 @@ export function renderBoard(
       cellElement.textContent = String(cellValue);
     }
 
-    if (isGivenCell(i)) {
+    if (options.isGivenCell(i)) {
       cellElement.classList.add("given");
     } else {
       cellElement.classList.add("editable");

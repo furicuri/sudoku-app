@@ -37,9 +37,11 @@ const newGame = newGameButton;
 const theme = themeButton;
 
 function updateBoard(): void {
+function updateBoard(): void {
   renderBoard(board, getCurrentBoard(), {
     selectedCellIndex: getSelectedCellIndex(),
     onCellClick: handleCellClick,
+    isGivenCell,
   });
 }
 
@@ -98,3 +100,4 @@ document.addEventListener("keydown", handleKeyDown);
 
 applySavedTheme(theme);
 initGame();
+}
