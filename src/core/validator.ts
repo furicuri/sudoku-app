@@ -1,7 +1,6 @@
-const BOARD_SIZE = 9;
-const BOX_SIZE = 3; 
+import { BOARD_SIZE, BOX_SIZE } from "./consts";
 
-export function canPlaceNumber( 
+export function canPlaceNumber(
   board: number[],
   index: number,
   value: number
@@ -16,7 +15,6 @@ export function canPlaceNumber(
   );
 }
 
-// проверяем, что такого значения нет в строке, которой принадлежит клетка
 function isValueNotInRow(board: number[], row: number, value: number): boolean {
   const rowStartIndex = row * BOARD_SIZE;
 
@@ -31,7 +29,6 @@ function isValueNotInRow(board: number[], row: number, value: number): boolean {
   return true;
 }
 
-// проверяем, что такого значения нет в колонке, которой принадлежит клетка
 function isValueNotInColumn(
   board: number[],
   column: number,
@@ -48,7 +45,6 @@ function isValueNotInColumn(
   return true;
 }
 
-// проверяем, что такого значения нет в 3x3 коробке, которой принадлежит клетка
 function isValueNotInBox(
   board: number[],
   row: number,

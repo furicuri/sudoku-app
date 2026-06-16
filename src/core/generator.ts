@@ -1,10 +1,10 @@
 import type { Board, CellValue, PuzzleDifficulty } from "./types";
+import { CELLS_COUNT, EMPTY_CELL } from "./consts";
 import { createEmptyBoard } from "./board";
 import { countSolutions, findEmptyCell } from "./solver";
 import { canPlaceNumber } from "./validator";
 import { shuffle } from "../utils/shuffle";
 
-const CELLS_COUNT = 81;
 const NUMBERS: CellValue[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const DIFFICULTY_SETTINGS: Record<PuzzleDifficulty, { cellsToRemove: number }> = {
@@ -21,7 +21,7 @@ export function generateSolvedBoard(): Board {
   return board;
 }
 
-function fillBoard(board: Board): boolean { 
+function fillBoard(board: Board): boolean {
   const emptyCellIndex = findEmptyCell(board);
 
   if (emptyCellIndex === -1) {
@@ -38,7 +38,7 @@ function fillBoard(board: Board): boolean {
         return true;
       }
 
-      board[emptyCellIndex] = 0;
+      board[emptyCellIndex] = EMPTY_CELL;
     }
   }
 
@@ -60,7 +60,7 @@ export function generatePuzzle(difficulty: PuzzleDifficulty = "medium"): Board {
     const valuesBeforeRemoving = pair.map((index) => puzzle[index]);
 
     for (const index of pair) {
-      puzzle[index] = 0;
+      puzzle[index] = EMPTY_CELL;
     }
 
     if (countSolutions([...puzzle]) !== 1) {

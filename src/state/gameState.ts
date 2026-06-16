@@ -1,16 +1,31 @@
 import type { Board, CellIndex, CellValue } from "../core/types";
 import { createBoardCopy, createInitialPuzzle } from "../core/board";
+import { EMPTY_CELL } from "../core/consts";
+import { isBoard } from "../core/guards";
 
-let puzzle: Board = createInitialPuzzle(); // Это начальная доска текущей игры. Она нужна для того, чтобы мы могли проверять, какие клетки были даны изначально, а какие мы заполняем сами.
-let currentBoard: Board = createBoardCopy(puzzle); // Это текущая доска, которая изменяется по мере того, как игрок заполняет клетки. Она нужна для того, чтобы мы могли отображать текущее состояние игры.
-let selectedCellIndex: CellIndex | null = null; // Это индекс выбранной клетки. Он нужен для того, чтобы мы могли выделять выбранную клетку на доске и заполнять её значением при нажатии на цифры.
+const STORAGE_KEY = "sudoku-game-state";
+
+type SavedGameState = {
+  puzzle: Board;
+  currentBoard: Board;
+};
+
+const savedGameState = loadGameState();
+
+let puzzle: Board = savedGameState?.puzzle ?? createInitialPuzzle();
+let currentBoard: Board = savedGameState?.currentBoard ?? createBoardCopy(puzzle);
+let selectedCellIndex: CellIndex | null = null;
+
+export function hasSavedGame(): boolean {
+  return savedGameState !== null;
+}
 
 export function getPuzzle(): Board {
-  return puzzle;
+  return createBoardCopy(puzzle);
 }
 
 export function getCurrentBoard(): Board {
-  return currentBoard;
+  return createBoardCopy(currentBoard);
 }
 
 export function getSelectedCellIndex(): CellIndex | null {
@@ -25,15 +40,64 @@ export function startNewGame(newPuzzle: Board): void {
   puzzle = createBoardCopy(newPuzzle);
   currentBoard = createBoardCopy(newPuzzle);
   selectedCellIndex = null;
+  saveGameState();
 }
 
 export function isGivenCell(index: CellIndex): boolean {
-  return puzzle[index] !== 0;
+  return puzzle[index] !== EMPTY_CELL;
 }
 
 export function setCellValue(index: CellIndex, value: CellValue): void {
   if (isGivenCell(index)) {
     return;
   }
+
   currentBoard[index] = value;
+  saveGameState();
+}
+
+function saveGameState(): void {
+  const state: SavedGameState = {
+    puzzle,
+    currentBoard,
+  };
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function loadGameState(): SavedGameState | null {
+  const rawState = localStorage.getItem(STORAGE_KEY);
+
+  if (!rawState) {
+    return null;
+  }
+
+  try {
+    const parsedState: unknown = JSON.parse(rawState);
+
+    if (!isSavedGameState(parsedState)) {
+      clearGameState();
+      return null;
+    }
+
+    return parsedState;
+  } catch (error) {
+    console.warn("Invalid saved game state", error);
+    clearGameState();
+    return null;
+  }
+}
+
+function isSavedGameState(value: unknown): value is SavedGameState {
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+
+  const state = value as Partial<SavedGameState>;
+
+  return isBoard(state.puzzle) && isBoard(state.currentBoard);
+}
+
+function clearGameState(): void {
+  localStorage.removeItem(STORAGE_KEY);
 }

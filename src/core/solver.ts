@@ -1,12 +1,9 @@
+import { EMPTY_CELL, MAX_CELL_VALUE, MIN_CELL_VALUE } from "./consts";
 import { canPlaceNumber } from "./validator";
-
-const EMPTY_CELL = 0; 
-const MIN_VALUE = 1;
-const MAX_VALUE = 9;
 
 export function findEmptyCell(board: number[]): number {
   return board.findIndex((cell) => cell === EMPTY_CELL);
-} 
+}
 
 export function solveBoard(board: number[]): boolean {
   const emptyCellIndex = findEmptyCell(board);
@@ -15,7 +12,7 @@ export function solveBoard(board: number[]): boolean {
     return true;
   }
 
-  for (let value = MIN_VALUE; value <= MAX_VALUE; value++) {
+  for (let value = MIN_CELL_VALUE; value <= MAX_CELL_VALUE; value++) {
     if (canPlaceNumber(board, emptyCellIndex, value)) {
       board[emptyCellIndex] = value;
 
@@ -28,7 +25,7 @@ export function solveBoard(board: number[]): boolean {
   }
 
   return false;
-} 
+}
 
 export function countSolutions(board: number[], limit = 2): number {
   const emptyCellIndex = findEmptyCell(board);
@@ -39,7 +36,7 @@ export function countSolutions(board: number[], limit = 2): number {
 
   let solutionsCount = 0;
 
-  for (let value = MIN_VALUE; value <= MAX_VALUE; value++) {
+  for (let value = MIN_CELL_VALUE; value <= MAX_CELL_VALUE; value++) {
     if (canPlaceNumber(board, emptyCellIndex, value)) {
       board[emptyCellIndex] = value;
 
@@ -54,4 +51,4 @@ export function countSolutions(board: number[], limit = 2): number {
   }
 
   return solutionsCount;
-} 
+}

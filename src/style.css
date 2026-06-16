@@ -79,11 +79,11 @@ button {
   color: #f9fafb;
 }
 
-button:hover:not(.cell--selected) {
+button:hover:not(.cell--selected):not(.given) {
   background: #eeeeee;
 }
 
-.theme-dark button:hover:not(.cell--selected) {
+.theme-dark button:hover:not(.cell--selected):not(.given) {
   background: #374151;
 }
 
@@ -129,8 +129,16 @@ button:hover:not(.cell--selected) {
   cursor: default;
 }
 
+.editable {
+  color: #2563eb;
+}
+
 .theme-dark .given {
   background: #374151;
+}
+
+.theme-dark .editable {
+  color: #93c5fd;
 }
 
 .cell--selected {

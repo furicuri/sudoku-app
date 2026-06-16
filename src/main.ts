@@ -1,12 +1,15 @@
 import { generatePuzzle } from "./core/generator";
+import { EMPTY_CELL } from "./core/consts";
+import { isPlayableCellValue } from "./core/guards";
 import {
   getCurrentBoard,
   getSelectedCellIndex,
+  hasSavedGame,
   isGivenCell,
   selectCell,
+  setCellValue,
   startNewGame,
 } from "./state/gameState";
-import { loadPuzzle, savePuzzle } from "./state/storage";
 
 import { renderBoard } from "./ui/renderBoard";
 import { applySavedTheme, toggleTheme } from "./ui/theme";
@@ -52,7 +55,6 @@ function handleCellClick(index: number): void {
 function handleNewGameClick(): void {
   const puzzle = generatePuzzle();
 
-  savePuzzle(puzzle);
   startNewGame(puzzle);
   updateBoard();
 }
@@ -61,20 +63,38 @@ function handleThemeButtonClick(): void {
   toggleTheme(theme);
 }
 
-function initGame(): void {
-  const savedPuzzle = loadPuzzle();
+function handleKeyDown(event: KeyboardEvent): void {
+  const selectedCellIndex = getSelectedCellIndex();
 
-  if (savedPuzzle) {
-    startNewGame(savedPuzzle);
+  if (selectedCellIndex === null || isGivenCell(selectedCellIndex)) {
+    return;
+  }
+
+  const numericKey = Number(event.key);
+
+  if (isPlayableCellValue(numericKey)) {
+    setCellValue(selectedCellIndex, numericKey);
     updateBoard();
     return;
   }
 
-  handleNewGameClick();
+  if (event.key === "Backspace" || event.key === "Delete" || event.key === "0") {
+    setCellValue(selectedCellIndex, EMPTY_CELL);
+    updateBoard();
+  }
+}
+
+function initGame(): void {
+  if (!hasSavedGame()) {
+    startNewGame(generatePuzzle());
+  }
+
+  updateBoard();
 }
 
 newGame.addEventListener("click", handleNewGameClick);
 theme.addEventListener("click", handleThemeButtonClick);
+document.addEventListener("keydown", handleKeyDown);
 
 applySavedTheme(theme);
 initGame();

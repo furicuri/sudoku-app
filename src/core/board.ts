@@ -1,4 +1,5 @@
 import type { Board } from "./types";
+import { CELLS_COUNT, EMPTY_CELL } from "./consts";
 
 export function createInitialPuzzle(): Board {
   return [
@@ -17,11 +18,9 @@ export function createInitialPuzzle(): Board {
 }
 
 export function createBoardCopy(board: Board): Board {
-
   return [...board];
-
 }
 
 export function createEmptyBoard(): Board {
-  return Array(81).fill(0) as Board;
+  return Array(CELLS_COUNT).fill(EMPTY_CELL) as Board;
 }

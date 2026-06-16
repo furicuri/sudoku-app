@@ -26,15 +26,17 @@ export function renderBoard(
       cellElement.textContent = String(cellValue);
     }
 
-    if (isGivenCell(i)) { 
+    if (isGivenCell(i)) {
       cellElement.classList.add("given");
+    } else {
+      cellElement.classList.add("editable");
     }
 
     if (options.selectedCellIndex === i) { 
       cellElement.classList.add("cell--selected");
     }
 
-    cellElement.addEventListener("click", () => { //
+    cellElement.addEventListener("click", () => {
       options.onCellClick(i);
     });
 
